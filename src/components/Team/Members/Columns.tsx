@@ -4,6 +4,8 @@ import { useHelpers } from "@/hooks/useHelpers"
 import { ColumnDef } from "@tanstack/react-table"
 import Roles from "./Options/Roles"
 import { Badge } from "@/components/ui/badge"
+import Options from "./Options"
+
 
 
 export const columns:ColumnDef<any>[] =[
@@ -70,6 +72,15 @@ export const columns:ColumnDef<any>[] =[
             default:
               return <Badge className="capitalize bg-neutral-100 text-neutral-600">Unknown</Badge>
           }
+        }
+    },
+    {
+        id: "actions",
+        cell: ({ row }) => {
+          const user = row.original;
+          return <div className="flex justify-end">
+            <Options {...{ user }} />
+          </div>
         }
       },
 ]
