@@ -3,6 +3,7 @@
 import { useHelpers } from "@/hooks/useHelpers"
 import { ColumnDef } from "@tanstack/react-table"
 import Roles from "./Options/Roles"
+import { Badge } from "@/components/ui/badge"
 
 
 export const columns:ColumnDef<any>[] =[
@@ -53,5 +54,22 @@ export const columns:ColumnDef<any>[] =[
                 </div>
             )
         }
-    }
+    },
+    {
+        accessorKey: "status",
+        header: "Status",
+        cell: ({ row }) => {
+          const status: string = row.getValue("status")
+          switch (status) {
+            case "pending":
+              return <Badge className="hover:bg-transparent capitalize bg-orange-50 text-orange-900">Pending</Badge>
+            case "active":
+              return <Badge className="hover:bg-transparent capitalize bg-green-50 text-green-900">Active</Badge>
+            case "removed":
+              return <Badge className="hover:bg-transparent capitalize bg-red-50 text-red-900">Removed</Badge>
+            default:
+              return <Badge className="capitalize bg-neutral-100 text-neutral-600">Unknown</Badge>
+          }
+        }
+      },
 ]
