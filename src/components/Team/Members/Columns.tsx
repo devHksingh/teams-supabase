@@ -1,5 +1,6 @@
 "use client"
  
+import { useHelpers } from "@/hooks/useHelpers"
 import { ColumnDef } from "@tanstack/react-table"
 
 
@@ -17,6 +18,35 @@ export const columns:ColumnDef<any>[] =[
                         <span className="font-medium">{name}</span>
                         <span className="text-xs text-neutral-500">{email}</span>
                     </div>
+                </div>
+            )
+        }
+    },
+    {
+        accessorKey:'role',
+        header:'Role',
+        cell:({row})=>{
+            const {open, setOpen, loading, setLoading} = useHelpers()
+            const role:string = row.getValue("role")
+
+            const onRoleChanged = (v:string) =>{
+                try{
+                    setLoading(true);
+                    alert(v)
+                }catch(error:any){
+                    throw new Error(error)
+                }finally{
+                    setOpen(false)
+                    setLoading(false)
+                }
+            }
+
+            return (
+                <div 
+                onClick={()=> setOpen(!open)}
+                className="w-[120px]"
+                >
+                    {!open && <span className="text-sm text-neutral-500 capitalize">{role}</span>}
                 </div>
             )
         }
