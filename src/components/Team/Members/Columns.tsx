@@ -2,6 +2,7 @@
  
 import { useHelpers } from "@/hooks/useHelpers"
 import { ColumnDef } from "@tanstack/react-table"
+import Roles from "./Options/Roles"
 
 
 export const columns:ColumnDef<any>[] =[
@@ -47,6 +48,8 @@ export const columns:ColumnDef<any>[] =[
                 className="w-[120px]"
                 >
                     {!open && <span className="text-sm text-neutral-500 capitalize">{role}</span>}
+
+                    {open && <Roles {...{selected :role}} setSelected ={(v:string)=>onRoleChanged(v)} />}
                 </div>
             )
         }
