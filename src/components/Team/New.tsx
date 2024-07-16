@@ -17,7 +17,7 @@ import { toast } from "sonner"
 import CustomButton from "../CustomButton"
 import Roles from "./Members/Options/Roles"
 
-export default function NewMember() {
+export default function NewMember({ team_id }: { team_id: string }) {
   const { open, setOpen, loading, setLoading } = useHelpers();
   const [member, setMember] = useState({
     name: "",
@@ -25,10 +25,17 @@ export default function NewMember() {
     role: "member"
   });
 
-  const sendInvitation = async () => {
+  const saveMember = async () => {
     try {
       setLoading(true);
-      
+      const { data, error } = await supabase
+        .from('team_members')
+        .insert({ ...member, team_id })
+        .select();
+
+      if (data) {
+        toast.success("Team members successfully added.")
+      }
     } catch (error: any) {
       throw new Error(error);
     } finally {
@@ -93,7 +100,7 @@ export default function NewMember() {
           </div>
         </div>
         <DialogFooter>
-          <CustomButton {...{ label: "Send invitation", loading, onClick: sendInvitation }} />
+          <CustomButton {...{ label: "Send invitation", loading, onClick: saveMember }} />
         </DialogFooter>
       </DialogContent>
     </Dialog>
